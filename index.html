@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Adventure Hub</title>
+  <meta name="description" content="Join the Adventure Club - Hiking, Kayaking, and Outdoor Events" />
+  <link rel="icon" type="image/svg+xml"
+    href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2335925C' stroke-width='2'%3E%3Cpath d='m8 3 4 8 5-5 5 15H2L8 3z'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="app">
+    <!-- Layout: Navbar + Main + Footer (for most pages) -->
+    <div id="layout-wrapper" class="min-h-screen flex flex-col">
+      <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 glass">
+        <div class="container mx-auto px-4">
+          <div class="flex items-center justify-between h-16 md:h-20">
+            <a href="#/" class="flex items-center gap-2 group">
+              <div
+                class="w-10 h-10 rounded-lg hero-gradient flex items-center justify-center transition-transform group-hover:scale-110">
+                <svg class="w-6 h-6 text-primary-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2">
+                  <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+                </svg>
+              </div>
+              <span class="font-heading text-sm sm:text-base font-bold text-foreground">Adventure Club</span>
+            </a>
+            <div class="hidden lg:flex items-center gap-1">
+              <div class="relative" id="home-dropdown">
+                <button type="button" id="home-dropdown-trigger"
+                  class="inline-flex items-center justify-center gap-1 px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                  aria-haspopup="true" aria-expanded="false">
+                  Home <svg class="w-4 h-4 rtl-flip" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="m6 9 6 6 6-6" />
+                  </svg>
+                </button>
+                <div id="home-dropdown-content"
+                  class="hidden absolute top-full left-0 mt-1 min-w-[8rem] overflow-hidden rounded-md border bg-popover border-border p-1 shadow-md z-50">
+                  <a href="#/" class="block px-2 py-1.5 text-sm rounded-sm cursor-pointer hover:bg-accent">Home Page
+                    1</a>
+                  <a href="#/home-2" class="block px-2 py-1.5 text-sm rounded-sm cursor-pointer hover:bg-accent">Home
+                    Page 2</a>
+                </div>
+              </div>
+              <a href="#/about"
+                class="nav-link px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                data-path="/about">About</a>
+              <a href="#/events"
+                class="nav-link px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                data-path="/events">Events</a>
+              <a href="#/blog"
+                class="nav-link px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                data-path="/blog">Blog</a>
+              <a href="#/pricing"
+                class="nav-link px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                data-path="/pricing">Membership</a>
+              <a href="#/contact"
+                class="nav-link px-4 py-2 font-medium rounded-lg transition-colors text-foreground hover:text-primary hover:bg-primary/5"
+                data-path="/contact">Contact</a>
+            </div>
+            <div class="flex items-center gap-2">
+              <button type="button" id="theme-toggle"
+                class="inline-flex items-center justify-center h-10 w-10 rounded-md text-foreground hover:text-primary"
+                title="Toggle theme">
+                <span id="theme-icon-sun" class="hidden"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="4" />
+                    <path
+                      d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+                  </svg></span>
+                <span id="theme-icon-moon"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+                  </svg></span>
+              </button>
+              <button type="button" id="rtl-toggle"
+                class="inline-flex items-center justify-center h-10 w-10 rounded-md border-2 border-primary/40 bg-primary/10 text-primary hover:bg-primary hover:text-primary-foreground transition-colors min-w-[2.5rem]"
+                title="Toggle RTL (Right-to-Left)" aria-label="Toggle RTL"><svg class="w-5 h-5" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="m5 8 6 6M4 14l6-6M2 12h1M21 12h1M12 2v1M12 21v1" />
+                </svg></button>
+              <a href="#/dashboard" class="hidden md:inline-flex"><button type="button"
+                  class="inline-flex items-center justify-center h-10 px-4 py-2 rounded-md border border-primary text-primary bg-background hover:bg-primary hover:text-primary-foreground">Dashboard</button></a>
+              <a href="#/login" class="hidden md:inline-flex"><button type="button"
+                  class="inline-flex items-center justify-center h-10 px-4 py-2 rounded-md hero-gradient text-primary-foreground hover:opacity-90">Sign
+                  In</button></a>
+              <button type="button" id="mobile-menu-btn"
+                class="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-md text-foreground">
+                <span id="mobile-icon-menu"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M4 6h16M4 12h16M4 18h16" />
+                  </svg></span>
+                <span id="mobile-icon-close" class="hidden"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M18 6 6 18M6 6l12 12" />
+                  </svg></span>
+              </button>
+            </div>
+          </div>
+          <div id="mobile-nav" class="hidden lg:hidden pb-4 animate-slide-down">
+            <div class="flex flex-col gap-2">
+              <a href="#/" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground" data-path="/">Home
+                Page 1</a>
+              <a href="#/home-2" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/home-2">Home Page 2</a>
+              <a href="#/about" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/about">About</a>
+              <a href="#/events" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/events">Events</a>
+              <a href="#/blog" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/blog">Blog</a>
+              <a href="#/pricing" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/pricing">Membership</a>
+              <a href="#/contact" class="mobile-nav-link px-4 py-3 rounded-lg font-medium text-foreground"
+                data-path="/contact">Contact</a>
+              <div class="flex gap-2 mt-2">
+                <a href="#/dashboard" class="flex-1"><button type="button"
+                    class="w-full inline-flex items-center justify-center h-9 px-3 rounded-md border border-primary text-primary">Dashboard</button></a>
+                <a href="#/login" class="flex-1"><button type="button"
+                    class="w-full inline-flex items-center justify-center h-9 px-3 rounded-md hero-gradient text-primary-foreground">Sign
+                    In</button></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+
+      <main class="flex-1 pt-16 md:pt-20">
+        <!-- LAYOUT PAGES (with navbar + footer) -->
+        <div id="page-index" data-route="/" class="page-content">
+          <section class="relative min-h-[90vh] flex items-center">
+            <div class="absolute inset-0 bg-cover bg-center" id="hero-bg-index"
+              style="background-image: url('assets/hero-mountain.jpg')">
+              <div class="absolute inset-0 hero-overlay"></div>
+            </div>
+            <div class="container mx-auto px-4 relative z-10">
+              <div class="max-w-4xl mx-auto text-center animate-fade-in">
+                <span class="inline-block px-4 py-2 bg-secondary/90 text-white rounded-full text-sm font-semibold mb-6">
+                  Adventure Awaits</span>
+                <h1 class="font-heading text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
+                  Explore The Wild<br /><span class="text-secondary">Together</span></h1>
+                <p class="text-lg md:text-xl text-white/90 mb-8 max-w-2xl mx-auto">Join our community of outdoor
+                  enthusiasts. Experience unforgettable adventures, forge lasting friendships, and discover the beauty
+                  of nature.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="#/pricing"><button type="button"
+                      class="w-full sm:w-auto btn-adventure text-lg px-8 h-11 rounded-md">Join The Club <svg
+                        class="w-5 h-5 rtl-flip ms-2 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg></button></a>
+                  <a href="#/events"><button type="button"
+                      class="w-full sm:w-auto inline-flex items-center justify-center h-11 px-8 rounded-md border-2 border-white/50 text-white bg-transparent hover:bg-white/10 text-lg">View
+                      Events</button></a>
+                </div>
+              </div>
+            </div>
+            <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-float">
+              <div class="w-8 h-12 border-2 border-white/50 rounded-full flex items-start justify-center p-2">
+                <div class="w-1.5 h-3 bg-white/70 rounded-full"></div>
+              </div>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-16">
+                <span class="text-secondary font-semibold uppercase tracking-wider text-sm">Why Join Us</span>
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2">Your Adventure
+                  Starts Here</h2>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 lg:gap-8" id="features-index"></div>
+            </div>
+          </section>
+          <section class="section-padding bg-muted/50">
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col md:flex-row md:items-end justify-between mb-12">
+                <div>
+                  <span class="text-secondary font-semibold uppercase tracking-wider text-sm">Don't Miss Out</span>
+                  <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2">Upcoming
+                    Adventures</h2>
+                </div>
+                <a href="#/events" class="mt-4 md:mt-0"><button type="button"
+                    class="inline-flex items-center border-primary text-primary hover:bg-primary hover:text-white border rounded-md px-4 py-2">View
+                    All Events <svg class="w-4 h-4 rtl-flip ms-2 inline" viewBox="0 0 24 24" fill="none"
+                      stroke="currentColor" stroke-width="2">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg></button></a>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" id="upcoming-events-index">
+              </div>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12">
+                <span class="text-secondary font-semibold uppercase tracking-wider text-sm">What We Do</span>
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2">Our Activities
+                </h2>
+              </div>
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 lg:gap-6" id="activities-index"></div>
+            </div>
+          </section>
+          <section class="relative py-24 md:py-32">
+            <div class="absolute inset-0 bg-cover bg-center bg-fixed"
+              style="background-image: url('assets/hiking-group.jpg')">
+              <div class="absolute inset-0 hero-gradient opacity-90"></div>
+            </div>
+            <div class="container mx-auto px-4 relative z-10 text-center">
+              <div class="max-w-3xl mx-auto">
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6">Ready For Your Next
+                  Adventure?</h2>
+                <p class="text-lg text-white/90 mb-8">Join hundreds of adventurers who have already discovered the joy
+                  of exploring nature with our community. Your journey begins today.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                  <a href="#/register"><button type="button"
+                      class="w-full sm:w-auto h-11 px-8 rounded-md bg-secondary hover:bg-secondary/90 text-white text-lg">Become
+                      A Member <svg class="w-5 h-5 ms-2 rtl-flip inline" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg></button></a>
+                  <a href="#/contact"><button type="button"
+                      class="w-full sm:w-auto h-11 px-8 rounded-md border-2 border-white text-white bg-transparent hover:bg-white/10 text-lg">Contact
+                      Us</button></a>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="py-16 bg-card border-y border-border">
+            <div class="container mx-auto px-4">
+              <div class="grid grid-cols-2 lg:grid-cols-4 gap-8" id="stats-index"></div>
+            </div>
+          </section>
+        </div>
+        <div id="page-home2" data-route="/home-2" class="page-content hidden">
+          <section class="relative min-h-[95vh] flex items-center bg-card overflow-hidden">
+            <div class="absolute top-0 end-0 w-full h-full hidden lg:block">
+              <img src="assets/night-sky-camping.jpg" alt="Mountain adventure" class="w-full h-full object-cover" />
+            </div>
+            <div class="container mx-auto px-4 relative z-10">
+              <div class="lg:w-1/2 lg:pe-12">
+                <div class="flex items-center gap-2 mb-6">
+                  <div class="w-12 h-12 rounded-xl hero-gradient flex items-center justify-center">
+                    <svg class="w-6 h-6 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                      stroke-width="2">
+                      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+                    </svg>
+                  </div>
+                  <span class="font-heading text-2xl font-bold text-white">Adventure Club</span>
+                </div>
+<h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                  Find Your<span class="block text-gradient py-2">Wild Side</span></h1>
+                <p class="text-lg text-white mb-8 max-w-xl">Transform weekends into adventures. Join a
+                  community that believes life is better outside. From sunrise hikes to starlit campfires, every moment
+                  becomes a story worth telling.</p>
+                <div class="flex flex-col sm:flex-row gap-4 mb-12">
+                  <a href="#/register"><button type="button"
+                      class="w-full sm:w-auto btn-adventure text-lg px-8 h-11">Start Your Journey <svg
+                        class="w-5 h-5 rtl-flip ms-2 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg></button></a>
+                  <a href="#/about"><button type="button"
+                      class="w-full sm:w-auto btn-adventure text-lg px-8 h-11">Learn More</button></a>
+                </div>
+                
+              </div>
+            </div>
+            <div class="absolute bottom-0 left-0 right-0 h-64 lg:hidden">
+              <img src="assets/mountain-walk.jpg" alt="Mountain" class="w-full h-full object-cover" />
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="max-w-3xl mx-auto text-center mb-16"><span
+                  class="text-secondary font-semibold uppercase tracking-wider text-sm">Our Values</span>
+                <h2 class="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-foreground mt-2 mb-4">What
+                  Drives Us Forward</h2>
+                <p class="text-muted-foreground text-lg">We're more than just an outdoor club. We're a community built
+                  on shared values and a passion for exploration.</p>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6" id="values-home2"></div>
+            </div>
+          </section>
+          <section class="section-padding bg-muted/50">
+            <div class="container mx-auto px-4">
+              <div class="grid lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1"><span
+                    class="text-secondary font-semibold uppercase tracking-wider text-sm">Who We Are</span>
+                  <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">A Community
+                    Of<br />Passionate Explorers</h2>
+                  <p class="text-muted-foreground mb-6">Founded in 2014, Adventure Club has grown from a small group of
+                    hiking enthusiasts to a thriving community of outdoor lovers. We organize weekly events,
+                    skill-building workshops, and epic multi-day expeditions.</p>
+                  <ul class="space-y-4 mb-8">
+                    <li class="flex items-center gap-3">
+                      <div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center"><svg
+                          class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg></div><span class="text-foreground">Professional guides on every trip</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center"><svg
+                          class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg></div><span class="text-foreground">Equipment rental available for members</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center"><svg
+                          class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg></div><span class="text-foreground">Beginner-friendly activities</span>
+                    </li>
+                    <li class="flex items-center gap-3">
+                      <div class="w-6 h-6 rounded-full bg-success/20 flex items-center justify-center"><svg
+                          class="w-4 h-4 text-success" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M20 6 9 17l-5-5" />
+                        </svg></div><span class="text-foreground">Photography workshops and contests</span>
+                    </li>
+                  </ul><a href="#/about"><button type="button" class="btn-adventure">More About Us <svg
+                        class="w-5 h-5 rtl-flip ms-2 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg></button></a>
+                </div>
+                <div class="order-1 lg:order-2 grid grid-cols-2 gap-4">
+                  <div class="space-y-4"><img src="assets/hiking-group.jpg" alt="Hiking"
+                      class="w-full rounded-2xl" /><img src="assets/kayaking.jpg" alt="Kayaking"
+                      class="w-full rounded-2xl" /></div>
+                  <div class="pt-8"><img src="assets/hero-mountain.jpg" alt="Mountain"
+                      class="w-full h-full object-cover rounded-2xl" /></div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="py-20 hero-gradient">
+            <div class="container mx-auto px-4 text-center">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Your Next Adventure Is Waiting
+              </h2>
+              <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">Don't just dream about adventure â€“ live it. Join
+                our community today and start creating memories that will last a lifetime.</p>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#/pricing"><button type="button"
+                    class="w-full sm:w-auto h-11 px-8 rounded-md bg-secondary hover:bg-secondary/90 text-white text-lg">View
+                    Membership Plans</button></a><a href="#/events"><button type="button"
+                    class="w-full sm:w-auto h-11 px-8 rounded-md border-2 border-white text-white bg-transparent hover:bg-white/10 text-lg">Browse
+                    Events</button></a></div>
+            </div>
+          </section>
+        </div>
+        <div id="page-about" data-route="/about" class="page-content hidden">
+          <section class="relative py-24 md:py-32 overflow-hidden">
+            <div class="absolute inset-0 bg-cover bg-center" style="background-image:url('assets/waterfalls.jpg')">
+              <div class="absolute inset-0 hero-overlay"></div>
+            </div>
+            <div class="container mx-auto px-4 relative z-10">
+              <div class="max-w-3xl text-center mx-auto"><span
+                  class="inline-block px-4 py-2 bg-secondary/90 text-white rounded-full text-sm font-semibold mb-6">Our
+                  Story</span>
+                <h1 class="font-heading text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">Connecting People
+                  Through Adventure</h1>
+                <p class="text-lg text-white/90">Since 2014, we've been bringing outdoor enthusiasts together to
+                  explore, discover, and create unforgettable memories in nature.</p>
+              </div>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+
+              <div class="grid lg:grid-cols-2 gap-8 lg:gap-12 items-start">
+
+                <!-- LEFT COLUMN -->
+                <div class="order-2 lg:order-1">
+
+                  <span class="text-secondary font-semibold uppercase tracking-wider text-sm">
+                    Our Mission
+                  </span>
+
+                  <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2 mb-6">
+                    Making The Outdoors Accessible To Everyone
+                  </h2>
+
+                  <p class="text-muted-foreground mb-6">
+                    Adventure Club was born from a simple idea: everyone deserves the opportunity
+                    to experience the transformative power of nature. What started as a small
+                    group of hiking friends has grown into a thriving community of over 2,500
+                    outdoor enthusiasts.
+                  </p>
+
+                  <p class="text-muted-foreground mb-8">
+                    We organize weekly events ranging from beginner-friendly nature walks
+                    to challenging multi-day expeditions. Our certified guides ensure every
+                    adventure is safe, educational, and above all, fun.
+                  </p>
+
+                  <div class="grid grid-cols-2 gap-6">
+                    <div class="text-center p-4 bg-card rounded-xl border border-border">
+                      <div class="font-heading text-3xl font-bold text-primary">2,500+</div>
+                      <div class="text-sm text-muted-foreground">Active Members</div>
+                    </div>
+
+                    <div class="text-center p-4 bg-card rounded-xl border border-border">
+                      <div class="font-heading text-3xl font-bold text-secondary">180+</div>
+                      <div class="text-sm text-muted-foreground">Events Per Year</div>
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- RIGHT COLUMN (IMAGE) -->
+                <div class="order-1 lg:order-2 flex justify-center lg:justify-end">
+
+                  <div class="relative w-full max-w-lg lg:-mt-10">
+
+                    <img src="assets/hiking-group.jpg" alt="Hiking group"
+                      class="w-full rounded-2xl shadow-lg object-cover" />
+
+                    <div class="absolute -bottom-6 -right-6 rtl:right-auto rtl:-left-6 
+                      w-40 h-40 md:w-48 md:h-48 rounded-xl overflow-hidden 
+                      border-4 border-background shadow-xl bg-card">
+
+                      <img src="assets/kayaking.jpg" alt="Kayaking" class="w-full h-full object-cover" />
+
+                    </div>
+
+                  </div>
+
+                </div>
+
+              </div>
+
+            </div>
+          </section>
+
+          <section class="section-padding bg-muted/50">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12"><span
+                  class="text-secondary font-semibold uppercase tracking-wider text-sm">What We Stand For</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Our Core Values</h2>
+              </div>
+              <div class="grid md:grid-cols-3 gap-8" id="values-about"></div>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12"><span
+                  class="text-secondary font-semibold uppercase tracking-wider text-sm">Meet Our Team</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Expert Guides & Leaders
+                </h2>
+              </div>
+              <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6" id="team-about"></div>
+            </div>
+          </section>
+          <section class="section-padding bg-card border-y border-border">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12"><span
+                  class="text-secondary font-semibold uppercase tracking-wider text-sm">Our Journey</span>
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground mt-2">Milestones</h2>
+              </div>
+              <div class="max-w-3xl mx-auto" id="milestones-about"></div>
+            </div>
+          </section>
+          <section class="py-20 hero-gradient">
+            <div class="container mx-auto px-4 text-center">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-white mb-4">Ready To Join Our Community?</h2>
+              <p class="text-white/80 text-lg mb-8 max-w-2xl mx-auto">Become part of a community that values adventure,
+                friendship, and the great outdoors.</p>
+              <div class="flex flex-col sm:flex-row gap-4 justify-center"><a href="#/register"><button type="button"
+                    class="w-full sm:w-auto h-11 px-8 rounded-md bg-secondary hover:bg-secondary/90 text-white">Become A
+                    Member</button></a><a href="#/contact"><button type="button"
+                    class="w-full sm:w-auto h-11 px-8 rounded-md border-2 border-white text-white bg-transparent hover:bg-white/10">Get
+                    In Touch</button></a></div>
+            </div>
+          </section>
+        </div>
+        <div id="page-events" data-route="/events" class="page-content hidden">
+          <section class="relative py-20 bg-card">
+            <div class="container mx-auto px-4">
+              <div class="max-w-3xl"><span
+                  class="text-secondary font-semibold uppercase tracking-wider text-sm">Upcoming Adventures</span>
+                <h1 class="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">Find Your Next Event
+                </h1>
+                <p class="text-lg text-muted-foreground">Browse our calendar of outdoor adventures. From
+                  beginner-friendly hikes to challenging expeditions, there's something for everyone.</p>
+              </div>
+            </div>
+          </section>
+          <section class="py-6 bg-background border-b border-border">
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col md:flex-row gap-4">
+                <div class="relative flex-1"><svg
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                  </svg><input type="text" id="events-search" placeholder="Search events or locations..."
+                    class="flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2" /></div>
+                <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto"><select id="events-difficulty"
+                    class="w-full sm:w-40 h-10 rounded-md border border-input bg-card px-3 py-2 text-sm">
+                    <option value="all">All Levels</option>
+                    <option value="beginner">Beginner</option>
+                    <option value="easy">Easy</option>
+                    <option value="moderate">Moderate</option>
+                    <option value="advanced">Advanced</option>
+                  </select><select id="events-activity"
+                    class="w-full sm:w-40 h-10 rounded-md border border-input bg-card px-3 py-2 text-sm">
+                    <option value="all">All Activities</option>
+                    <option value="hiking">Hiking</option>
+                    <option value="kayaking">Kayaking</option>
+                    <option value="camping">Camping</option>
+                    <option value="climbing">Climbing</option>
+                  </select></div>
+              </div>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div id="events-grid"></div>
+              <div id="events-empty" class="hidden text-center py-16"><svg
+                  class="w-16 h-16 mx-auto text-muted-foreground/50 mb-4" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2">
+                  <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3" />
+                </svg>
+                <h3 class="font-heading text-xl font-bold text-foreground mb-2">No events found</h3>
+                <p class="text-muted-foreground mb-6">Try adjusting your filters or search terms.</p><button
+                  type="button" id="events-clear-filters"
+                  class="inline-flex items-center justify-center rounded-md border border-input bg-background px-4 py-2 text-sm hover:bg-accent">Clear
+                  Filters</button>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div id="page-events-1" data-route="/events/1" class="page-content hidden">
+          <div id="event-detail-1"></div>
+        </div>
+        <div id="page-events-2" data-route="/events/2" class="page-content hidden">
+          <div id="event-detail-2"></div>
+        </div>
+        <div id="page-blog" data-route="/blog" class="page-content hidden">
+          <section class="py-20 bg-card">
+            <div class="max-w-6xl mx-auto px-4"><span class="text-secondary font-semibold uppercase text-sm">Adventure
+                Blog</span>
+              <h1 class="text-4xl md:text-5xl font-bold mt-3 mb-4">Stories, Tips &amp; Inspiration</h1>
+              <p class="text-muted-foreground max-w-2xl">Expert advice, gear reviews, and inspiring stories from our
+                outdoor community.</p>
+            </div>
+          </section>
+          <section class="py-6 bg-background border-b border-border">
+            <div class="max-w-6xl mx-auto px-4">
+              <div class="flex flex-col md:flex-row gap-4 items-start md:items-center">
+                <div class="relative flex-1 w-full"><svg
+                    class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-muted-foreground" viewBox="0 0 24 24"
+                    fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8" />
+                    <path d="m21 21-4.3-4.3" />
+                  </svg><input type="text" id="blog-search" placeholder="Search articles..."
+                    class="flex h-10 w-full rounded-md border border-input bg-background pl-10 pr-3 py-2" /></div>
+                <div class="flex flex-wrap gap-2 justify-center md:justify-start" id="blog-categories"></div>
+              </div>
+            </div>
+          </section>
+          <section class="py-12 bg-background">
+            <div class="max-w-6xl mx-auto px-4" id="blog-featured"></div>
+          </section>
+          <section class="py-16 bg-background">
+            <div class="max-w-6xl mx-auto px-4" id="blog-grid"></div>
+            <div id="blog-empty" class="hidden text-center py-16"><button type="button" id="blog-clear-filters">Clear
+                Filters</button></div>
+          </section>
+        </div>
+        <div id="page-blog-1" data-route="/blog/1" class="page-content hidden">
+          <div id="blog-detail-1"></div>
+        </div>
+        <div id="page-pricing" data-route="/pricing" class="page-content hidden">
+          <section class="py-20 bg-card">
+            <div class="container mx-auto px-4 text-center"><span
+                class="text-secondary font-semibold uppercase tracking-wider text-sm">Membership Plans</span>
+              <h1 class="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">Join The Adventure</h1>
+              <p class="text-lg text-muted-foreground max-w-2xl mx-auto">Choose the plan that fits your adventure style.
+                All memberships include access to our amazing community and exclusive member benefits.</p>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto" id="pricing-plans"></div>
+            </div>
+          </section>
+          <section class="section-padding bg-muted/50">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-12">
+                <h2 class="font-heading text-3xl md:text-4xl font-bold text-foreground">Frequently Asked Questions</h2>
+              </div>
+              <div class="max-w-3xl mx-auto space-y-4" id="pricing-faq"></div>
+            </div>
+          </section>
+          <section class="py-20 hero-gradient">
+            <div class="container mx-auto px-4 text-center">
+              <h2 class="font-heading text-3xl md:text-4xl font-bold text-primary-foreground mb-4">Still Have Questions?
+              </h2>
+              <p class="text-primary-foreground/80 text-lg mb-8">Our team is happy to help you find the perfect
+                membership.</p><a href="#/contact"><button type="button"
+                  class="h-11 px-8 rounded-md bg-secondary hover:bg-secondary/90 text-secondary-foreground">Contact
+                  Us</button></a>
+            </div>
+          </section>
+        </div>
+        <div id="page-contact" data-route="/contact" class="page-content hidden">
+          <section class="py-20 bg-card">
+            <div class="container mx-auto px-4 text-center"><span
+                class="text-secondary font-semibold uppercase tracking-wider text-sm">Get In Touch</span>
+              <h1 class="font-heading text-4xl md:text-5xl font-bold text-foreground mt-2 mb-4">Contact Us</h1>
+              <p class="text-lg text-muted-foreground max-w-2xl mx-auto">Have questions about our adventures or
+                membership? We'd love to hear from you. Reach out and our team will get back to you soon.</p>
+            </div>
+          </section>
+          <section class="section-padding bg-background">
+            <div class="container mx-auto px-4">
+              <div class="grid lg:grid-cols-3 gap-12">
+                <div class="lg:col-span-1 space-y-6">
+                  <h2 class="font-heading text-2xl font-bold text-foreground mb-6">Contact Information</h2>
+                  <div class="flex gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"><svg
+                        class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                        <circle cx="12" cy="10" r="3" />
+                      </svg></div>
+                    <div>
+                      <h3 class="font-semibold text-foreground mb-1">Address</h3>
+                      <p class="text-sm text-muted-foreground">123 Mountain View Trail<br />Adventure City, AC 12345</p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"><svg
+                        class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path
+                          d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                      </svg></div>
+                    <div>
+                      <h3 class="font-semibold text-foreground mb-1">Phone</h3>
+                      <p class="text-sm text-muted-foreground"><a href="tel:+1234567890" class="hover:text-primary">+1
+                          (234) 567-890</a><br /><a href="tel:+1234567891" class="hover:text-primary">+1 (234)
+                          567-891</a></p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"><svg
+                        class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                        <polyline points="22,6 12,13 2,6" />
+                      </svg></div>
+                    <div>
+                      <h3 class="font-semibold text-foreground mb-1">Email</h3>
+                      <p class="text-sm text-muted-foreground"><a href="mailto:hello@adventureclub.com"
+                          class="hover:text-primary">hello@adventureclub.com</a><br /><a
+                          href="mailto:support@adventureclub.com"
+                          class="hover:text-primary">support@adventureclub.com</a></p>
+                    </div>
+                  </div>
+                  <div class="flex gap-4">
+                    <div class="w-12 h-12 flex-shrink-0 rounded-xl bg-primary/10 flex items-center justify-center"><svg
+                        class="w-6 h-6 text-primary" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <polyline points="12 6 12 12 16 14" />
+                      </svg></div>
+                    <div>
+                      <h3 class="font-semibold text-foreground mb-1">Office Hours</h3>
+                      <p class="text-sm text-muted-foreground">Mon - Fri: 9:00 AM - 6:00 PM<br />Sat: 10:00 AM - 4:00 PM
+                      </p>
+                    </div>
+                  </div>
+                  <div class="mt-8 rounded-xl overflow-hidden border border-border shadow-md">
+                    <iframe
+                      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d50401.58901135747!2d-105.3200371!3d40.0149856!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x876b8d4e278dafd3%3A0xc8393b7ca01b8058!2sRocky%20Mountain%20National%20Park!5e0!3m2!1sen!2sus!4v1644329384726!5m2!1sen!2sus"
+                      width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy"
+                      referrerpolicy="no-referrer-when-downgrade" title="Rocky Mountain National Park Location">
+                    </iframe>
+                  </div>
+                </div>
+                <div class="lg:col-span-2">
+                  <div class="card-adventure p-8">
+                    <h2 class="font-heading text-2xl font-bold text-foreground mb-6">Send Us A Message</h2>
+                    <form class="space-y-6">
+                      <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2"><label for="firstName" class="text-sm font-medium">First
+                            Name</label><input id="firstName" placeholder="John"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2" /></div>
+                        <div class="space-y-2"><label for="lastName" class="text-sm font-medium">Last Name</label><input
+                            id="lastName" placeholder="Doe"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2" /></div>
+                      </div>
+                      <div class="grid md:grid-cols-2 gap-6">
+                        <div class="space-y-2"><label for="contact-email"
+                            class="text-sm font-medium">Email</label><input id="contact-email" type="email"
+                            placeholder="john@example.com"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2" /></div>
+                        <div class="space-y-2"><label for="contact-phone" class="text-sm font-medium">Phone
+                            (Optional)</label><input id="contact-phone" type="tel" placeholder="+1 (234) 567-890"
+                            class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2" /></div>
+                      </div>
+                      <div class="space-y-2"><label for="subject" class="text-sm font-medium">Subject</label><input
+                          id="subject" placeholder="How can we help you?"
+                          class="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2" /></div>
+                      <div class="space-y-2"><label for="message" class="text-sm font-medium">Message</label><textarea
+                          id="message" placeholder="Tell us more about your inquiry..." rows="6"
+                          class="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2"></textarea>
+                      </div><button type="submit" class="btn-adventure w-full md:w-auto"><svg
+                          class="w-4 h-4 mr-2 inline" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                          stroke-width="2">
+                          <path d="M22 2 11 13" />
+                          <path d="M22 2 15 22 11 13 2 9 22 2" />
+                        </svg> Send Message</button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </main>
+
+      <footer id="footer" class="bg-card border-t border-border">
+        <div class="container mx-auto px-4 py-12 md:py-16">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+            <div class="space-y-4">
+              <a href="#/" class="flex items-center gap-2 group">
+                <div class="w-10 h-10 rounded-lg hero-gradient flex items-center justify-center">
+                  <svg class="w-6 h-6 text-primary-foreground" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+                  </svg>
+                </div>
+                <span class="font-heading text-xl font-bold text-foreground">Adventure Club</span>
+              </a>
+              <p class="text-muted-foreground text-sm leading-relaxed">Join our community of outdoor enthusiasts.
+                Explore nature, make friends, and create unforgettable memories on every adventure.</p>
+              <div class="flex items-center gap-3">
+                <a href="#"
+                  class="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Facebook"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                  </svg></a>
+                <a href="#"
+                  class="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Instagram"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <rect width="20" height="20" x="2" y="2" rx="5" ry="5" />
+                    <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+                    <line x1="17.5" x2="17.51" y1="6.5" y2="6.5" />
+                  </svg></a>
+                <a href="#"
+                  class="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Twitter"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+                  </svg></a>
+                <a href="#"
+                  class="w-10 h-10 rounded-full bg-muted flex items-center justify-center text-muted-foreground hover:bg-primary hover:text-primary-foreground transition-colors"
+                  aria-label="Youtube"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                      d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
+                  </svg></a>
+              </div>
+            </div>
+            <div>
+              <h4 class="font-heading text-lg font-semibold text-foreground mb-4">Quick Links</h4>
+              <ul class="space-y-3">
+                <li><a href="#/" class="text-muted-foreground hover:text-primary transition-colors text-sm">Home</a>
+                </li>
+                <li><a href="#/about" class="text-muted-foreground hover:text-primary transition-colors text-sm">About
+                    Us</a></li>
+                <li><a href="#/events"
+                    class="text-muted-foreground hover:text-primary transition-colors text-sm">Events</a></li>
+                <li><a href="#/blog" class="text-muted-foreground hover:text-primary transition-colors text-sm">Blog</a>
+                </li>
+                <li><a href="#/contact"
+                    class="text-muted-foreground hover:text-primary transition-colors text-sm">Contact</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-heading text-lg font-semibold text-foreground mb-4">Resources</h4>
+              <ul class="space-y-3">
+                <li><a href="#/pricing"
+                    class="text-muted-foreground hover:text-primary transition-colors text-sm">Membership</a></li>
+                <li><a href="#/dashboard"
+                    class="text-muted-foreground hover:text-primary transition-colors text-sm">Member Dashboard</a></li>
+                <li><a href="#/404-demo" class="text-muted-foreground hover:text-primary transition-colors text-sm">404
+                    Page</a></li>
+                <li><a href="#/maintenance"
+                    class="text-muted-foreground hover:text-primary transition-colors text-sm">Maintenance</a></li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-heading text-lg font-semibold text-foreground mb-4">Contact Us</h4>
+              <ul class="space-y-3">
+                <li class="flex items-start gap-3 text-sm">
+                  <svg class="w-5 h-5 text-primary flex-shrink-0 mt-0.5" viewBox="0 0 24 24" fill="none"
+                    stroke="currentColor" stroke-width="2">
+                    <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                  <span class="text-muted-foreground">123 Mountain View Trail<br />Adventure City, AC 12345</span>
+                </li>
+                <li class="flex items-center gap-3 text-sm">
+                  <svg class="w-5 h-5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path
+                      d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                  </svg>
+                  <a href="tel:+1234567890" class="text-muted-foreground hover:text-primary transition-colors">+1 (234)
+                    567-890</a>
+                </li>
+                <li class="flex items-center gap-3 text-sm">
+                  <svg class="w-5 h-5 text-primary flex-shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+                    <polyline points="22,6 12,13 2,6" />
+                  </svg>
+                  <a href="mailto:hello@adventureclub.com"
+                    class="text-muted-foreground hover:text-primary transition-colors">hello@adventureclub.com</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div class="mt-12 pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-muted-foreground text-center md:text-left">© 2026 ASR Adventure Club. All rights
+              reserved.</p>
+            <p class="text-sm text-muted-foreground">Powered by <span class="text-primary font-semibold">ASR</span></p>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- FULL-PAGE VIEWS (no navbar/footer) -->
+    <div id="page-login" data-route="/login" class="page-full hidden"></div>
+    <div id="page-register" data-route="/register" class="page-full hidden"></div>
+    <div id="page-dashboard" data-route="/dashboard" class="page-full hidden"></div>
+    <div id="page-admin" data-route="/admin" class="page-full hidden"></div>
+    <div id="page-maintenance" data-route="/maintenance" class="page-full hidden"></div>
+    <div id="page-notfound" data-route="/404-demo" class="page-full hidden"></div>
+    <div id="page-notfound-catch" data-route="*" class="page-full hidden"></div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+
+</html>
