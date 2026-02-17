@@ -271,27 +271,42 @@
     return '<div class="flex min-h-screen items-center justify-center bg-muted"><div class="text-center"><h1 class="mb-4 text-4xl font-bold">404</h1><p class="mb-4 text-xl text-muted-foreground">Oops! Page not found</p><a href="#/" class="text-primary underline hover:text-primary/90">Return to Home</a></div></div>';
   }
 
-  function initAuthToggles(container) {
-    if (!container) return;
-    container.querySelectorAll('.password-toggle').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var wrap = btn.closest('.relative');
-        var input = wrap && wrap.querySelector('input[type="password"], input[type="text"]');
-        var eyeOn = wrap && wrap.querySelector('.eye-on');
-        var eyeOff = wrap && wrap.querySelector('.eye-off');
-        if (!input) return;
-        if (input.type === 'password') {
-          input.type = 'text';
-          if (eyeOn) eyeOn.classList.add('hidden');
-          if (eyeOff) eyeOff.classList.remove('hidden');
-        } else {
-          input.type = 'password';
-          if (eyeOn) eyeOn.classList.remove('hidden');
-          if (eyeOff) eyeOff.classList.add('hidden');
-        }
-      });
+function initAuthToggles(container) {
+  if (!container) return;
+
+  // Password toggle logic
+  container.querySelectorAll('.password-toggle').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var wrap = btn.closest('.relative');
+      var input = wrap && wrap.querySelector('input[type="password"], input[type="text"]');
+      var eyeOn = wrap && wrap.querySelector('.eye-on');
+      var eyeOff = wrap && wrap.querySelector('.eye-off');
+      if (!input) return;
+
+      if (input.type === 'password') {
+        input.type = 'text';
+        if (eyeOn) eyeOn.classList.add('hidden');
+        if (eyeOff) eyeOff.classList.remove('hidden');
+      } else {
+        input.type = 'password';
+        if (eyeOn) eyeOn.classList.remove('hidden');
+        if (eyeOff) eyeOff.classList.add('hidden');
+      }
+    });
+  });
+
+  // ✅ FORM SUBMIT HANDLER (OUTSIDE toggle click)
+  var form = container.querySelector('form');
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Redirect after login/register
+      window.location.hash = '/'; // or '/' for home
     });
   }
+}
+
 
   function initAdminSidebar(container) {
     var sidebar = document.getElementById('admin-sidebar');
